@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'football_app.apps.football',
     'football_app.apps.football_statistics',
 ]
 
