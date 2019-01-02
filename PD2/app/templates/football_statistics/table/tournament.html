@@ -1,0 +1,37 @@
+<div class="tournament-table-wrapper">
+    <table>
+        <thead>
+        <tr>
+            <th>Position</th>
+            <th>Club</th>
+            <th>Played</th>
+            <th>Won</th>
+            <th>Lost</th>
+            <th><abbr title="Won in primary time">WPT</abbr></th>
+            <th><abbr title="Won in extra time">WET</abbr></th>
+            <th><abbr title="Lost in primary time">LPT</abbr></th>
+            <th><abbr title="Lost in extra time">LET</abbr></th>
+            <th>Goals</th>
+            <th>Goals conceded</th>
+            <th>Points</th>
+        </tr></thead>
+        <tbody>
+            {% for team in team_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ team.name }}</td>
+                <td>{{ team.games_played }}</td>
+                <td>{{ team.won_count }}</td>
+                <td>{{ team.lost_count }}</td>
+                <td>{{ team.won_in_primary_time }}</td>
+                <td>{{ team.won_in_extra_time }}</td>
+                <td>{{ team.lost_in_primary_time }}</td>
+                <td>{{ team.lost_in_extra_time }}</td>
+                <td>{{ team.goals_scored }}</td>
+                <td>{{ team.goals_conceded }}</td>
+                <td>{{ team.points }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
