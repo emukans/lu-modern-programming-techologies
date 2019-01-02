@@ -2,8 +2,9 @@ from django.http import HttpRequest
 from django.shortcuts import render
 from functools import reduce
 from collections import Counter
+from django.db.models import Count
 
-from football_app.apps.football.models import Team
+from football_app.apps.football.models import Team, Player
 from football_app.apps.football_statistics.models import Goal, Match
 
 
@@ -50,10 +51,29 @@ def process_team_data(team: Team) -> dict:
     return team_data
 
 
-def tournament_table(request: HttpRequest):
+def process_player_data(player: Player) -> dict:
+    return dict(
+        first_name=player.first_name,
+        last_name=player.last_name,
+        team_name=player.team.name,
+        goals_scored=player.goal_set.count(),
+        goals_assisted=player.goalcombination_set.count()
+    )
+
+
+def build_best_player_list() -> list:
+    best_player_list = Player.objects.annotate(goal_count=Count('goal'), combination_count=Count('goalcombination')) \
+        .order_by('-goal_count', '-combination_count', 'first_name', 'last_name')[:10]
+
+    player_list = map(process_player_data, best_player_list)
+    return list(player_list)
+
+
+def tournament_statistics(request: HttpRequest):
     team_list = map(process_team_data, Team.objects.all())
     sorted_team_list = sorted(team_list, key=lambda k: k['points'], reverse=True)
 
-    return render(request, 'football_statistics/table/tournament.html', dict(
-        team_list=sorted_team_list
+    return render(request, 'football_statistics/statistics.html', dict(
+        team_list=sorted_team_list,
+        best_player_list=build_best_player_list()
     ))

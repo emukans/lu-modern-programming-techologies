@@ -1,0 +1,25 @@
+<div class="best-player-table-wrapper">
+    <table>
+        <thead>
+        <tr>
+            <th>Position</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Club</th>
+            <th>Goals scored</th>
+            <th>Goals assisted</th>
+        </tr></thead>
+        <tbody>
+            {% for player in best_player_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ player.first_name }}</td>
+                <td>{{ player.last_name }}</td>
+                <td>{{ player.team_name }}</td>
+                <td>{{ player.goals_scored }}</td>
+                <td>{{ player.goals_assisted }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
