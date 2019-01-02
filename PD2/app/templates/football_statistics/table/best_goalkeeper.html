@@ -1,0 +1,23 @@
+<div class="best-goalkeeper-table-wrapper">
+    <table>
+        <thead>
+        <tr>
+            <th>Position</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Club</th>
+            <th><abbr title="Average conceded goals per match">ACG</abbr></th>
+        </tr></thead>
+        <tbody>
+            {% for player in best_goalkeeper_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ player.first_name }}</td>
+                <td>{{ player.last_name }}</td>
+                <td>{{ player.team_name }}</td>
+                <td>{{ player.average_conceded_goal_count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

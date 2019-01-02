@@ -1,3 +1,4 @@
+from typing import Optional
 from django.http import HttpRequest
 from django.shortcuts import render
 from functools import reduce
@@ -7,6 +8,9 @@ from django.db.models import Count
 from football_app.apps.football.models import Team, Player
 from football_app.apps.football_statistics.models import Goal, Match
 
+PRIMARY_TIME_LIMIT = 60
+EXTRA_PERIOD_TIME_LENGTH = 15
+
 
 def process_team_match(match: Match, team: Team) -> dict:
     goal_list = Goal.objects.filter(match=match, player__team=team).order_by('minute')
@@ -15,8 +19,8 @@ def process_team_match(match: Match, team: Team) -> dict:
     goal_conceded = goal_conceded_list.count()
     is_won = goals_scored > goal_conceded
     last_goal = goal_list.last() if is_won else goal_conceded_list.last()
-    is_won_in_primary_time = is_won and last_goal.minute < 60
-    is_lost_in_primary_time = not is_won and last_goal.minute < 60
+    is_won_in_primary_time = is_won and last_goal.minute < PRIMARY_TIME_LIMIT
+    is_lost_in_primary_time = not is_won and last_goal.minute < PRIMARY_TIME_LIMIT
 
     return dict(
         goals_scored=goals_scored,
@@ -27,11 +31,15 @@ def process_team_match(match: Match, team: Team) -> dict:
     )
 
 
+def reduce_list_of_dicts(data_list: list) -> dict:
+    return reduce(lambda x, y: dict(Counter(x) + Counter(y)), data_list)
+
+
 def process_team_data(team: Team) -> dict:
     games_played = Match.objects.filter(home_team=team).count() + Match.objects.filter(guest_team=team).count()
     team_match_list = Match.objects.filter(home_team=team) | Match.objects.filter(guest_team=team)
     match_data_list = [process_team_match(match, team) for match in team_match_list]
-    match_data = reduce(lambda x, y: dict(Counter(x) + Counter(y)), match_data_list)
+    match_data = reduce_list_of_dicts(match_data_list)
 
     team_data = dict(games_played=games_played,
                      name=team.name,
@@ -69,11 +77,70 @@ def build_best_player_list() -> list:
     return list(player_list)
 
 
+def get_extra_time_period_end(last_goal_time: int, accumulator: int) -> int:
+    if last_goal_time > accumulator:
+        return get_extra_time_period_end(last_goal_time, accumulator + EXTRA_PERIOD_TIME_LENGTH)
+
+    return accumulator
+
+
+def count_goalkeeper_conceded_goals_on_match(match: Match, player: Player) -> dict:
+    count_goals_from_time = 0
+    count_goals_till_time = PRIMARY_TIME_LIMIT
+    goalkeeper_data = dict(
+        conceded_goal_count=0
+    )
+
+    if Goal.objects.filter(match=match, minute__gt=PRIMARY_TIME_LIMIT).exists():
+        last_goal = Goal.objects.filter(match=match, minute__gt=PRIMARY_TIME_LIMIT).order_by('minute').last()
+        count_goals_till_time = get_extra_time_period_end(last_goal.minute, PRIMARY_TIME_LIMIT)
+
+    if match.change_set.filter(replaced_from=player).exists():
+        count_goals_till_time = match.change_set.filter(replaced_from=player).first().minute
+
+    if match.change_set.filter(replaced_to=player).exists():
+        count_goals_from_time = match.change_set.filter(replaced_to=player).first().minute
+
+    conceded_goal_list = Goal.objects.filter(match=match, minute__gte=count_goals_from_time, minute__lte=count_goals_till_time).exclude(player__team=player.team)
+    if not conceded_goal_list.count():
+        return goalkeeper_data
+
+    goalkeeper_data.update(dict(conceded_goal_count=conceded_goal_list.count()))
+
+    return goalkeeper_data
+
+
+def process_goalkeeper_data(player: Player) -> Optional[dict]:
+    participated_match_list = Match.objects.filter(baseteamonmatch__base_players=player, baseteamonmatch__team=player.team).distinct() | Match.objects.filter(change__replaced_to=player).distinct()
+
+    if not participated_match_list.count():
+        return None
+
+    goalkeeper_data = reduce_list_of_dicts([count_goalkeeper_conceded_goals_on_match(match, player) for match in participated_match_list])
+
+    return dict(
+        first_name=player.first_name,
+        last_name=player.last_name,
+        team_name=player.team.name,
+        conceded_goal_count=goalkeeper_data.get('conceded_goal_count'),
+        participated_match_count=participated_match_list.count(),
+        average_conceded_goal_count=round(participated_match_list.count() / goalkeeper_data.get('conceded_goal_count'), 1)
+    )
+
+
+def build_best_goalkeeper_list() -> list:
+    goalkeeper_list = Player.objects.filter(role=Player.GOALKEEPER)
+    goalkeeper_data = list(filter(lambda x: x is not None, map(process_goalkeeper_data, goalkeeper_list)))
+
+    return sorted(goalkeeper_data, key=lambda k: k['average_conceded_goal_count'])
+
+
 def tournament_statistics(request: HttpRequest):
     team_list = map(process_team_data, Team.objects.all())
     sorted_team_list = sorted(team_list, key=lambda k: k['points'], reverse=True)
 
     return render(request, 'football_statistics/statistics.html', dict(
         team_list=sorted_team_list,
-        best_player_list=build_best_player_list()
+        best_player_list=build_best_player_list(),
+        best_goalkeeper_list=build_best_goalkeeper_list()
     ))

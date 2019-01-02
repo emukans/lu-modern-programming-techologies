@@ -10,10 +10,14 @@ class Team(models.Model):
 
 
 class Player(models.Model):
+    GOALKEEPER = 'V'
+    DEFENDER = 'A'
+    FORWARD = 'U'
+
     ROLE_CHOICES = (
-        ('V', 'GOALKEEPER'),
-        ('A', 'DEFENDER'),
-        ('U', 'FORWARD')
+        (GOALKEEPER, 'GOALKEEPER'),
+        (DEFENDER, 'DEFENDER'),
+        (FORWARD, 'FORWARD')
     )
 
     first_name: str = models.CharField(max_length=50)
