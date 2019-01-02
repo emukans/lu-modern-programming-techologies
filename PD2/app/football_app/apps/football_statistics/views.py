@@ -132,7 +132,7 @@ def build_best_goalkeeper_list() -> list:
     goalkeeper_list = Player.objects.filter(role=Player.GOALKEEPER)
     goalkeeper_data = list(filter(lambda x: x is not None, map(process_goalkeeper_data, goalkeeper_list)))
 
-    return sorted(goalkeeper_data, key=lambda k: k['average_conceded_goal_count'])
+    return sorted(goalkeeper_data, key=lambda k: k['average_conceded_goal_count'])[:5]
 
 
 def tournament_statistics(request: HttpRequest):
