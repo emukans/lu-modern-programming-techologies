@@ -135,6 +135,22 @@ def build_best_goalkeeper_list() -> list:
     return sorted(goalkeeper_data, key=lambda k: k['average_conceded_goal_count'])[:5]
 
 
+def process_aggressive_player(player: Player) -> dict:
+    return dict(
+        first_name=player.first_name,
+        last_name=player.last_name,
+        team_name=player.team.name,
+        foul_count=player.foul_set.count()
+    )
+
+
+def build_most_aggressive_player_list() -> list:
+    aggressive_player_list = Player.objects.annotate(foul_count=Count('foul')).exclude(foul_count=0).order_by('-foul_count', 'first_name', 'last_name')[:10]
+
+    player_list = map(process_aggressive_player, aggressive_player_list)
+    return list(player_list)
+
+
 def tournament_statistics(request: HttpRequest):
     team_list = map(process_team_data, Team.objects.all())
     sorted_team_list = sorted(team_list, key=lambda k: k['points'], reverse=True)
@@ -142,5 +158,6 @@ def tournament_statistics(request: HttpRequest):
     return render(request, 'football_statistics/statistics.html', dict(
         team_list=sorted_team_list,
         best_player_list=build_best_player_list(),
-        best_goalkeeper_list=build_best_goalkeeper_list()
+        best_goalkeeper_list=build_best_goalkeeper_list(),
+        aggressive_player_list=build_most_aggressive_player_list()
     ))
