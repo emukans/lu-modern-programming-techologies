@@ -54,7 +54,7 @@ def process_team_data(team: Team) -> dict:
 
     team_data.update({
         'points': team_data.get('won_in_primary_time') * 5 + team_data.get('won_in_extra_time') * 3
-        + team_data.get('lost_in_extra_time') * 2 + team_data.get('lost_in_primary_time')
+                  + team_data.get('lost_in_extra_time') * 2 + team_data.get('lost_in_primary_time')
     })
     return team_data
 
@@ -71,7 +71,7 @@ def process_player_data(player: Player) -> dict:
 
 def build_best_player_list() -> list:
     best_player_list = Player.objects.annotate(goal_count=Count('goal'), combination_count=Count('goalcombination')) \
-        .order_by('-goal_count', '-combination_count', 'first_name', 'last_name')[:10]
+                           .order_by('-goal_count', '-combination_count', 'first_name', 'last_name')[:10]
 
     player_list = map(process_player_data, best_player_list)
     return list(player_list)
@@ -111,7 +111,8 @@ def count_goalkeeper_conceded_goals_on_match(match: Match, player: Player) -> di
 
 
 def process_goalkeeper_data(player: Player) -> Optional[dict]:
-    participated_match_list = Match.objects.filter(baseteamonmatch__base_players=player, baseteamonmatch__team=player.team).distinct() | Match.objects.filter(change__replaced_to=player).distinct()
+    participated_match_list = Match.objects.filter(baseteamonmatch__base_players=player, baseteamonmatch__team=player.team).distinct() | Match.objects.filter(
+        change__replaced_to=player).distinct()
 
     if not participated_match_list.count():
         return None
@@ -151,6 +152,18 @@ def build_most_aggressive_player_list() -> list:
     return list(player_list)
 
 
+def build_most_tight_referee_list() -> list:
+    referee_foul_count = Match.objects.values('main_referee__id', 'main_referee__first_name', 'main_referee__last_name').annotate(foul_count=Count('foul'))\
+        .order_by('main_referee__first_name', 'main_referee__last_name')
+
+    referee_data = list(map(lambda match: dict(first_name=match['main_referee__first_name'],
+                                               last_name=match['main_referee__last_name'],
+                                               average_foul_count=match['foul_count'] / Match.objects.filter(main_referee_id=match['main_referee__id']).count()),
+                            referee_foul_count))
+
+    return sorted(referee_data, key=lambda k: (k['average_foul_count']), reverse=True)
+
+
 def tournament_statistics(request: HttpRequest):
     team_list = map(process_team_data, Team.objects.all())
     sorted_team_list = sorted(team_list, key=lambda k: k['points'], reverse=True)
@@ -159,5 +172,6 @@ def tournament_statistics(request: HttpRequest):
         team_list=sorted_team_list,
         best_player_list=build_best_player_list(),
         best_goalkeeper_list=build_best_goalkeeper_list(),
-        aggressive_player_list=build_most_aggressive_player_list()
+        aggressive_player_list=build_most_aggressive_player_list(),
+        tight_referee_list=build_most_tight_referee_list()
     ))
