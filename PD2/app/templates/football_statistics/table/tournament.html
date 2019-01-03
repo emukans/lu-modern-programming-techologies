@@ -14,12 +14,13 @@
             <th>Goals</th>
             <th>Goals conceded</th>
             <th>Points</th>
-        </tr></thead>
+        </tr>
+        </thead>
         <tbody>
-            {% for team in team_list %}
+        {% for team in team_list %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ team.name }}</td>
+                <td><a href="{% url "team-statistics" team_id=team.id %}">{{ team.name }}</a></td>
                 <td>{{ team.games_played }}</td>
                 <td>{{ team.won_count }}</td>
                 <td>{{ team.lost_count }}</td>
@@ -31,7 +32,7 @@
                 <td>{{ team.goals_conceded }}</td>
                 <td>{{ team.points }}</td>
             </tr>
-            {% endfor %}
+        {% endfor %}
         </tbody>
     </table>
 </div>

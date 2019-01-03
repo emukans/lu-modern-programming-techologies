@@ -1,0 +1,6 @@
+{% extends "football_statistics/base.html" %}
+
+{% block content %}
+    {% include 'football_statistics/table/team_player.html' with player_list=player_list %}
+    {% include 'football_statistics/table/team_goalkeeper.html' with goalkeeper_list=goalkeeper_list %}
+{% endblock %}
