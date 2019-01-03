@@ -43,18 +43,18 @@ def process_team_data(team: Team) -> dict:
     team_data = dict(id=team.id,
                      games_played=games_played,
                      name=team.name,
-                     goals_scored=match_data.get('goals_scored'),
-                     goals_conceded=match_data.get('goal_conceded'),
-                     won_count=match_data.get('won_count'),
-                     lost_count=(games_played - match_data.get('won_count')),
-                     won_in_primary_time=match_data.get('won_in_primary_time'),
-                     won_in_extra_time=match_data.get('won_count') - match_data.get('won_in_primary_time'),
-                     lost_in_primary_time=match_data.get('lost_in_primary_time'),
-                     lost_in_extra_time=(games_played - match_data.get('won_count')) - match_data.get('lost_in_primary_time'))
+                     goals_scored=match_data.get('goals_scored', 0),
+                     goals_conceded=match_data.get('goal_conceded', 0),
+                     won_count=match_data.get('won_count', 0),
+                     lost_count=(games_played - match_data.get('won_count', 0)),
+                     won_in_primary_time=match_data.get('won_in_primary_time', 0),
+                     won_in_extra_time=match_data.get('won_count', 0) - match_data.get('won_in_primary_time', 0),
+                     lost_in_primary_time=match_data.get('lost_in_primary_time', 0),
+                     lost_in_extra_time=(games_played - match_data.get('won_count', 0)) - match_data.get('lost_in_primary_time', 0))
 
     team_data.update({
-        'points': team_data.get('won_in_primary_time') * 5 + team_data.get('won_in_extra_time') * 3
-                  + team_data.get('lost_in_extra_time') * 2 + team_data.get('lost_in_primary_time')
+        'points': team_data.get('won_in_primary_time', 0) * 5 + team_data.get('won_in_extra_time', 0) * 3
+                  + team_data.get('lost_in_extra_time', 0) * 2 + team_data.get('lost_in_primary_time', 0)
     })
     return team_data
 
@@ -130,9 +130,9 @@ def process_goalkeeper_data(player: Player) -> Optional[dict]:
         last_name=player.last_name,
         team_name=player.team.name,
         number=player.number,
-        conceded_goal_count=goalkeeper_data.get('conceded_goal_count'),
+        conceded_goal_count=goalkeeper_data.get('conceded_goal_count', 0),
         participated_match_count=participated_match_list.count(),
-        average_conceded_goal_count=round(goalkeeper_data.get('conceded_goal_count') / participated_match_list.count(), 1)
+        average_conceded_goal_count=round(goalkeeper_data.get('conceded_goal_count', 0) / participated_match_list.count(), 1)
     )
 
 
