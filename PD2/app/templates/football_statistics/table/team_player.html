@@ -1,23 +1,24 @@
 <div class="team-player-table-wrapper">
-    <table>
+    <table class="table table-striped table-hover">
+        <caption>Player statistics</caption>
         <thead>
         <tr>
-            <th>Number</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Goals scored</th>
-            <th>Goals assisted</th>
-            <th>Played time</th>
-            <th>Yellow cards</th>
-            <th>Red cards</th>
-            <th>Played matches</th>
-            <th>Played matches in base team</th>
+            <th scope="col">Number</th>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Goals scored</th>
+            <th scope="col">Goals assisted</th>
+            <th scope="col">Played time</th>
+            <th scope="col">Yellow cards</th>
+            <th scope="col">Red cards</th>
+            <th scope="col">Played matches</th>
+            <th scope="col"><abbr title="Played matches in base team">PBT</abbr></th>
         </tr>
         </thead>
         <tbody>
         {% for player in player_list %}
             <tr>
-                <td>{{ player.number }}</td>
+                <th scope="row">{{ player.number }}</th>
                 <td>{{ player.first_name }}</td>
                 <td>{{ player.last_name }}</td>
                 <td>{{ player.goals_scored }}</td>

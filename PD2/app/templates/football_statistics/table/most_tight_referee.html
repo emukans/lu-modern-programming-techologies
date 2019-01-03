@@ -1,16 +1,17 @@
 <div class="best-goalkeeper-table-wrapper">
-    <table>
+    <table class="table table-striped table-hover">
+        <caption>The toughest judges</caption>
         <thead>
         <tr>
-            <th>Position</th>
-            <th>First name</th>
-            <th>Last name</th>
-            <th><abbr title="Average foul count per game">AFC</abbr></th>
+            <th scope="col">Position</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col"><abbr title="Average foul count per game">AFC</abbr></th>
         </tr></thead>
         <tbody>
             {% for referee in tight_referee_list %}
             <tr>
-                <td>{{ forloop.counter }}</td>
+                <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ referee.first_name }}</td>
                 <td>{{ referee.last_name }}</td>
                 <td>{{ referee.average_foul_count }}</td>
