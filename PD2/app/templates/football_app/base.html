@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Football statistics{% endblock %}</title>
+    <link rel="stylesheet" href="/static/vendor/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Football app</a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% url 'tournament-statistics' as tournament_statistics_url %}
+                <li class="nav-item {% if request.path == tournament_statistics_url %}active{% endif %}">
+                    <a class="nav-link" href="{{ tournament_statistics_url }}">Tournament statistics</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>
