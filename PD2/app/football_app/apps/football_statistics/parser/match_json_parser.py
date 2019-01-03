@@ -1,7 +1,6 @@
 from django.db import IntegrityError, transaction
 from datetime import datetime
-from football_app.apps.football.models import Stadium, Team, Player, Referee
-from football_app.apps.football_statistics.models import Match, BaseTeamOnMatch, Foul, Goal, GoalCombination, Change
+from football_app.apps.football.models import Stadium, Team, Player, Referee, Match, BaseTeamOnMatch, Foul, Goal, GoalCombination, Change
 
 
 def parse_time(time: str) -> tuple:

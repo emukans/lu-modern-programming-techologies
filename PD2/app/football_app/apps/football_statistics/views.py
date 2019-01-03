@@ -5,8 +5,7 @@ from functools import reduce
 from collections import Counter
 from django.db.models import Count
 
-from football_app.apps.football.models import Team, Player
-from football_app.apps.football_statistics.models import Goal, Match, Foul, BaseTeamOnMatch
+from football_app.apps.football.models import Team, Player, Goal, Match, Foul, BaseTeamOnMatch
 
 PRIMARY_TIME_LIMIT = 60
 EXTRA_PERIOD_TIME_LENGTH = 15
