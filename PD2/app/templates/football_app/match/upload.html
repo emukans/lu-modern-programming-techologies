@@ -1,0 +1,14 @@
+{% extends "football_app/base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-8 mx-auto my-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Upload match data</h4>
+                    {% include 'football_app/form/match/upload.html' with form=form %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

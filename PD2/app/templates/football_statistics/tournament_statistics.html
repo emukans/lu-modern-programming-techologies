@@ -2,28 +2,28 @@
 
 {% block content %}
     <div class="row">
-        <div class="col">
+        <div class="col my-2">
             {% include 'football_statistics/table/tournament.html' with team_list=team_list %}
         </div>
     </div>
     <div class="row">
-        <div class="col">
+        <div class="col my-2">
             {% include 'football_statistics/table/best_player.html' with best_player_list=best_player_list %}
         </div>
     </div>
 
     <div class="row">
-        <div class="col">
+        <div class="col my-2">
             {% include 'football_statistics/table/best_goalkeeper.html' with best_goalkeeper_list=best_goalkeeper_list %}
         </div>
     </div>
     <div class="row">
-        <div class="col">
+        <div class="col my-2">
             {% include 'football_statistics/table/most_aggressive_player.html' with aggressive_player_list=aggressive_player_list %}
         </div>
     </div>
     <div class="row">
-        <div class="col">
+        <div class="col my-2">
             {% include 'football_statistics/table/most_tight_referee.html' with tight_referee_list=tight_referee_list %}
         </div>
     </div>

@@ -2,12 +2,12 @@
 
 {% block content %}
     <div class="row">
-        <div class="col">
+        <div class="col my-2">
             {% include 'football_statistics/table/team_player.html' with player_list=player_list %}
         </div>
     </div>
     <div class="row">
-        <div class="col">
+        <div class="col my-2">
             {% include 'football_statistics/table/team_goalkeeper.html' with goalkeeper_list=goalkeeper_list %}
         </div>
     </div>

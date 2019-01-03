@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 import json
-from football_app.apps.football_statistics.parser.match_json_parser import match_json_parser
+from football_app.apps.football.parser.match_json_parser import match_json_parser
 
 
 class Command(BaseCommand):

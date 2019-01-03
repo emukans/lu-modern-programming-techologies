@@ -17,6 +17,10 @@
                 <li class="nav-item {% if request.path == tournament_statistics_url %}active{% endif %}">
                     <a class="nav-link" href="{{ tournament_statistics_url }}">Tournament statistics</a>
                 </li>
+                {% url 'match-upload' as match_upload_url %}
+                <li class="nav-item {% if request.path == match_upload_url %}active{% endif %}">
+                    <a class="nav-link" href="{{ match_upload_url }}">Upload match data</a>
+                </li>
             </ul>
         </div>
     </nav>
