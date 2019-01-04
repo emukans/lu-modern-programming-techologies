@@ -166,7 +166,7 @@ def build_most_aggressive_player_list() -> list:
 
 
 def build_most_tight_referee_list() -> list:
-    referee_foul_count = Match.objects.values('main_referee__id', 'main_referee__first_name', 'main_referee__last_name').annotate(foul_count=Count('foul'))\
+    referee_foul_count = Match.objects.values('main_referee__id', 'main_referee__first_name', 'main_referee__last_name').annotate(foul_count=Count('foul')) \
         .order_by('main_referee__first_name', 'main_referee__last_name')
 
     referee_data = list(map(lambda match: dict(first_name=match['main_referee__first_name'],
@@ -175,6 +175,36 @@ def build_most_tight_referee_list() -> list:
                             referee_foul_count))
 
     return sorted(referee_data, key=lambda k: (k['average_foul_count']), reverse=True)
+
+
+def build_most_effective_goalkeeper() -> list:
+    player_list = Player.objects.filter(role=Player.GOALKEEPER)
+    player_data = map(lambda player: {**process_goalkeeper_data(player), **process_player_additional_data(player)}, player_list)
+    player_data = map(lambda player: {**player, **{'player_score': calculate_goalkeeper_score(player)}}, player_data)
+    player_data = sorted(player_data, key=lambda k: k['player_score'], reverse=True)
+
+    return list(player_data)[:5]
+
+
+def calculate_goalkeeper_score(player):
+    drawbacks = (player.get('conceded_goal_count', 0) + player.get('yellow_card_count', 0) + player.get('red_card_count', 0)) + 1
+
+    return round(player.get('played_length', 0) / drawbacks, 2)
+
+
+def build_most_effective_player() -> list:
+    player_list = Player.objects.exclude(role=Player.GOALKEEPER)
+    player_data = map(lambda player: {**process_player_data(player), **process_player_additional_data(player)}, player_list)
+    player_data = map(lambda player: {**player, **{'player_score': calculate_player_score(player)}}, player_data)
+    player_data = sorted(player_data, key=lambda k: k['player_score'], reverse=True)
+
+    return list(player_data)[:10]
+
+
+def calculate_player_score(player):
+    score = (player.get('goals_scored', 0) + player.get('goals_assisted', 0) - player.get('yellow_card_count', 0) - player.get('red_card_count', 0)) * 1000 / player.get(
+        'played_length', 1)
+    return round(score, 2)
 
 
 def tournament_statistics(request: HttpRequest):
@@ -186,7 +216,9 @@ def tournament_statistics(request: HttpRequest):
         best_player_list=build_best_player_list(),
         best_goalkeeper_list=build_best_goalkeeper_list(),
         aggressive_player_list=build_most_aggressive_player_list(),
-        tight_referee_list=build_most_tight_referee_list()
+        tight_referee_list=build_most_tight_referee_list(),
+        effective_player_list=build_most_effective_player(),
+        effective_goalkeeper_list=build_most_effective_goalkeeper()
     ))
 
 

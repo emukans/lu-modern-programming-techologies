@@ -1,0 +1,24 @@
+<div class="effective-player-table-wrapper">
+    <table class="table table-striped table-hover">
+        <caption>Top 5 most effective goalkeepers (score = played time / (conceded goals + yellow cards + red cards + 1))</caption>
+        <thead>
+        <tr>
+            <th scope="col">Position</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Club</th>
+            <th scope="col">Score</th>
+        </tr></thead>
+        <tbody>
+            {% for player in effective_goalkeeper_list %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ player.first_name }}</td>
+                <td>{{ player.last_name }}</td>
+                <td>{{ player.team_name }}</td>
+                <td>{{ player.player_score }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -27,4 +27,14 @@
             {% include 'football_statistics/table/most_tight_referee.html' with tight_referee_list=tight_referee_list %}
         </div>
     </div>
+    <div class="row">
+        <div class="col my-2">
+            {% include 'football_statistics/table/effective_player.html' with effective_player_list=effective_player_list %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col my-2">
+            {% include 'football_statistics/table/effective_goalkeeper.html' with effective_goalkeeper_list=effective_goalkeeper_list %}
+        </div>
+    </div>
 {% endblock %}
