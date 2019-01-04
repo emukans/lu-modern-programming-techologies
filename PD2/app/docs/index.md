@@ -39,8 +39,12 @@ Izmantotas tehnoloģijas:
     ``` 
  
 4. Atvērt `http://localhost:8080` brauzerī 
- 
+
+
+### Datubāzes struktūra
+![Datubāzes struktūra](files/images/DATABASE:football_db.png) 
  
 ### Cita dokumentācija 
 1. [Statistikas tabulas](statistics.md) 
 2. [Lietotāja dokumentācija](user-guides.md) 
+2. [Tehniska dokumentācija](technical-documentation.md) 

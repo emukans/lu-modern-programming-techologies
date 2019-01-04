@@ -1,4 +1,3 @@
-from typing import Optional
 from functools import reduce
 from collections import Counter
 from django.db.models import Count
@@ -29,6 +28,9 @@ def process_team_match(match: Match, team: Team) -> dict:
 
 
 def reduce_list_of_dicts(data_list: list) -> dict:
+    if len(data_list) == 0:
+        return {}
+
     return reduce(lambda x, y: dict(Counter(x) + Counter(y)), data_list)
 
 
@@ -115,11 +117,19 @@ def count_goalkeeper_conceded_goals_on_match(match: Match, player: Player) -> di
     return goalkeeper_data
 
 
-def process_goalkeeper_data(player: Player) -> Optional[dict]:
+def process_goalkeeper_data(player: Player) -> dict:
     participated_match_list = get_player_match_list(player)
-
+    player_data = dict(
+        first_name=player.first_name,
+        last_name=player.last_name,
+        team_name=player.team.name,
+        number=player.number,
+        conceded_goal_count=0,
+        participated_match_count=0,
+        average_conceded_goal_count=0
+    )
     if not participated_match_list.count():
-        return None
+        return player_data
 
     goalkeeper_data = reduce_list_of_dicts([count_goalkeeper_conceded_goals_on_match(match, player) for match in participated_match_list])
 
@@ -142,7 +152,7 @@ def get_player_match_list(player: Player):
 
 def build_best_goalkeeper_list() -> list:
     goalkeeper_list = Player.objects.filter(role=Player.GOALKEEPER)
-    goalkeeper_data = list(filter(lambda x: x is not None, map(process_goalkeeper_data, goalkeeper_list)))
+    goalkeeper_data = list(map(process_goalkeeper_data, goalkeeper_list))
 
     return sorted(goalkeeper_data, key=lambda k: k['average_conceded_goal_count'])[:5]
 
@@ -203,8 +213,6 @@ def calculate_player_score(player):
     score = (player.get('goals_scored', 0) + player.get('goals_assisted', 0) - player.get('yellow_card_count', 0) - player.get('red_card_count', 0)) * 1000 / player.get(
         'played_length', 1)
     return round(score, 2)
-
-
 
 
 def build_team_list():

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>12fb0c2e-dc29-4679-8526-ac6b48f9f300.DATABASE:football_db</OriginalElement>
+  <nodes>
+    <node x="1461.5" y="719.0">12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_player</node>
+    <node x="546.5" y="563.0">12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_goalcombination</node>
+    <node x="1480.5" y="170.0">12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_foul</node>
+    <node x="258.0" y="148.0">12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_match</node>
+    <node x="1418.5" y="992.0">12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_baseteamonmatch_base_players</node>
+    <node x="1174.0" y="399.0">12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_change</node>
+    <node x="1798.0" y="3.0">12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_team</node>
+    <node x="1781.0" y="992.0">12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_baseteamonmatch</node>
+    <node x="278.0" y="1203.0">12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_stadium</node>
+    <node x="-19.5" y="-8.0">12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_match_line_referee</node>
+    <node x="-18.5" y="192.0">12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_referee</node>
+    <node x="802.0" y="552.0">12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_goalcombination_participated_players</node>
+    <node x="549.5" y="719.0">12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_goal</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_goalcombination_participated_players" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_goalcombination">
+      <point x="-158.0" y="-0.0" />
+      <point x="93.5" y="-0.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_change" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_match">
+      <point x="-106.0" y="-0.0" />
+      <point x="420.0" y="480.0" />
+      <point x="60.0" y="92.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_match_line_referee" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_referee">
+      <point x="0.0" y="48.0" />
+      <point x="0.0" y="-48.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_match" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_team">
+      <point x="0.0" y="-92.0" />
+      <point x="360.0" y="40.0" />
+      <point x="-82.0" y="-0.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_match_line_referee" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_match">
+      <point x="99.5" y="-0.0" />
+      <point x="320.0" y="40.0" />
+      <point x="-40.0" y="-92.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_match" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_stadium">
+      <point x="0.0" y="92.0" />
+      <point x="0.0" y="-37.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_change" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_player">
+      <point x="106.0" y="-0.0" />
+      <point x="1520.0" y="480.0" />
+      <point x="-40.0" y="-81.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_baseteamonmatch" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_team">
+      <point x="0.0" y="-48.0" />
+      <point x="0.0" y="37.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_baseteamonmatch" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_match">
+      <point x="0.0" y="48.0" />
+      <point x="1880.0" y="1160.0" />
+      <point x="380.0" y="1160.0" />
+      <point x="20.0" y="92.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_goal" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_player">
+      <point x="90.5" y="-0.0" />
+      <point x="-98.5" y="-0.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_match" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_referee">
+      <point x="-102.0" y="-0.0" />
+      <point x="98.5" y="-0.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_baseteamonmatch_base_players" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_player">
+      <point x="0.0" y="-48.0" />
+      <point x="0.0" y="81.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_goalcombination" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_goal">
+      <point x="0.0" y="37.0" />
+      <point x="0.0" y="-81.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_baseteamonmatch_base_players" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_baseteamonmatch">
+      <point x="141.5" y="-0.0" />
+      <point x="-99.0" y="-0.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_foul" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_match">
+      <point x="-79.5" y="-0.0" />
+      <point x="102.0" y="-0.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_player" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_team">
+      <point x="98.5" y="-0.0" />
+      <point x="1840.0" y="800.0" />
+      <point x="-40.0" y="37.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_goal" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_match">
+      <point x="-90.5" y="-0.0" />
+      <point x="400.0" y="800.0" />
+      <point x="40.0" y="92.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_goalcombination_participated_players" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_player">
+      <point x="0.0" y="48.0" />
+      <point x="960.0" y="780.0" />
+      <point x="-98.5" y="-20.0" />
+    </edge>
+    <edge source="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_foul" target="12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_player">
+      <point x="0.0" y="70.0" />
+      <point x="0.0" y="-81.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6973749380881624" x="979.5" y="634.5" />
+  <SelectedNodes>
+    <node>12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_match</node>
+    <node>12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_goalcombination</node>
+    <node>12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_change</node>
+    <node>12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_foul</node>
+    <node>12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_baseteamonmatch_base_players</node>
+    <node>12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_team</node>
+    <node>12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_baseteamonmatch</node>
+    <node>12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_goal</node>
+    <node>12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_match_line_referee</node>
+    <node>12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_referee</node>
+    <node>12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_stadium</node>
+    <node>12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_player</node>
+    <node>12fb0c2e-dc29-4679-8526-ac6b48f9f300.TABLE:football_db.public.football_goalcombination_participated_players</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+  </Categories>
+</Diagram>
+

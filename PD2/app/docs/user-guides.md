@@ -5,7 +5,7 @@
 #### Caur UI interfeisu 
  
 1. Atvērt `http://localhost:8080/match/upload` 
-![Spēles pievienošana](images/speles-pievienosana.png) 
+![Spēles pievienošana](files/images/speles-pievienosana.png) 
 2. Pievienot failus. (Var pievienot vairākus failus uzreiz) 
 3. Nospiest "Submit" 
  
