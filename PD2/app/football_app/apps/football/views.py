@@ -1,5 +1,3 @@
-import json
-
 from django.http import HttpRequest
 from django.shortcuts import render
 
@@ -15,7 +13,9 @@ def upload_match(request: HttpRequest):
         form = MatchForm(request.POST, request.FILES)
 
         if form.is_valid():
-            match_json_parser(form.cleaned_data.get('match_json_file'))
+            for data in form.cleaned_data.get('match_json_file'):
+                match_json_parser(data)
+
             is_upload_successful = True
 
     return render(request, 'football_app/match/upload.html', {'form': form, 'is_upload_successful': is_upload_successful})
