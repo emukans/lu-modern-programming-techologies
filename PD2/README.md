@@ -11,13 +11,17 @@ Please follow the instructions to set up the Django project.
 * Docker compose 1.20 or higher
 
 ### Installing
-1. Create a `.env` file from the `.env.example` file. And adapt it according to your Django project needs.
+1. Start docker-compose by running
     ```bash
-    cp .env.example .env
+    docker-compose up -d
     ```
-2. Start docker-compose by running `docker-compose up -d`
 
-3. (Optional) Dump static files.
+2. Run migrations.
+    ```bash
+    docker-compose exec app python manage.py migrate
+    ```
+    
+3. Dump static files.
     ```bash
     docker-compose exec app python manage.py collectstatic --no-input
     ```
